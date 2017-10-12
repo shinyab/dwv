@@ -874,6 +874,7 @@ dwv.image.ImageFactory = function () {};
 dwv.image.ImageFactory.prototype.create = function (dicomElements, pixelBuffer)
 {
     // columns
+    // http://dicomlookup.com/lookup.asp?sw=Tnumber&q=(0028,0011)
     var columns = dicomElements.getFromKey("x00280011");
     if ( !columns ) {
         throw new Error("Missing or empty DICOM image number of columns");
@@ -1008,7 +1009,7 @@ dwv.image.ImageFactory.prototype.create = function (dicomElements, pixelBuffer)
     image.setMeta(meta);
 
     // overlay
-    image.setFirstOverlay( dwv.gui.info.createOverlays(dicomElements) );
+    // image.setFirstOverlay( dwv.gui.info.createOverlays(dicomElements) );
 
     return image;
 };

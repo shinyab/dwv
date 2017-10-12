@@ -69,5 +69,5 @@ module.exports = function(grunt) {
 
   // Task to run tests
   grunt.registerTask('publish', ['jshint', 'qunit', 'coveralls', 'concat', 'uglify', 'jsdoc']);
-  // grunt.registerTask('vuno', ['jshint', 'qunit', 'coveralls', 'concat', 'uglify', 'jsdoc']);
+    grunt.registerTask('vuno', ['jshint', 'concat', 'uglify']);
 };

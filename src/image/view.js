@@ -603,6 +603,7 @@ dwv.image.View.prototype.setWindowLevelMinMax = function()
  * Generate display image data to be given to a canvas.
  * @param {Array} array The array to fill in.
  */
+// canvas를 통하여 이미지 버퍼 생성
 dwv.image.View.prototype.generateImageData = function( array )
 {
     var windowLut = this.getCurrentWindowLut();
@@ -823,7 +824,7 @@ dwv.image.ViewFactory.prototype.create = function (dicomElements, image)
     }
 
     // min/max
-    // Not filled yet since it is stil too costly to calculate min/max
+    // Not filled yet since it is still too costly to calculate min/max
     // for each slice... It will be filled at first use (see view.setWindowLevelPreset).
     // Order is important, if no wl from DICOM, this will be the default.
     windowPresets.minmax = { "name": "minmax" };

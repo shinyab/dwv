@@ -160,7 +160,7 @@ dwv.App = function ()
      */
     this.getDrawStage = function () {
         return drawController.getDrawStage();
-     };
+    };
 
     /**
      * Get the app style.
@@ -256,6 +256,7 @@ dwv.App = function ()
                     var loaderName = config.loaders[l];
                     var loaderClass = loaderName + "Load";
                     // default: find the loader in the dwv.gui namespace
+                    // with reference to loader.js
                     if (typeof dwv.gui[loaderClass] !== "undefined") {
                         loaderList[loaderName] = new dwv.gui[loaderClass](this);
                     }
@@ -350,10 +351,10 @@ dwv.App = function ()
      * @param name The name or id to find.
      * @return The found element or null.
      */
-     this.getElement = function (name)
-     {
-         return dwv.gui.getElement(containerDivId, name);
-     };
+    this.getElement = function (name)
+    {
+        return dwv.gui.getElement(containerDivId, name);
+    };
 
     /**
      * Reset the application.
@@ -403,7 +404,7 @@ dwv.App = function ()
             fireEvent({"type": "zoom-change", "scale": scale, "cx": scaleCenter.x, "cy": scaleCenter.y });
         }
         if ( (previousSC.x !== scaleCenter.x || previousSC.y !== scaleCenter.y) ||
-             (previousTrans.x !== translation.x || previousTrans.y !== translation.y)) {
+            (previousTrans.x !== translation.x || previousTrans.y !== translation.y)) {
             fireEvent({"type": "offset-change", "scale": scale, "cx": scaleCenter.x, "cy": scaleCenter.y });
         }
     };
@@ -533,8 +534,8 @@ dwv.App = function ()
     /**
      * Load a list of image data.
      * @private
-     * @param {Array} data Array of data to load.
-     * @param {Object} loader The data loader.
+     * @param {Array} data Array of data to load.(ex files-name)
+     * @param {Object} loader The data loader.(ex dwv.io.FilesLoader)
      * @param {Object} options Options passed to the final loader.
      */
     function loadImageData(data, loader, options)
@@ -554,6 +555,7 @@ dwv.App = function ()
             firstName.split('.').pop().toLowerCase() !== "zip");
         // set IO
         loader.setDefaultCharacterSet(defaultCharacterSet);
+        // dicomBufferToView.js : self.onload({"view": view, "info": dicomParser.getDicomElements().dumpToTable()});
         loader.onload = function (data) {
             if ( image ) {
                 view.append( data.view );
@@ -781,7 +783,7 @@ dwv.App = function ()
     };
     /**
      * Delete all Draws from all layers.
-    */
+     */
     this.deleteDraws = function () {
         drawController.deleteDraws(fireEvent, this.addToUndoStack);
     };
@@ -957,6 +959,8 @@ dwv.App = function ()
      */
     this.onChangeFiles = function (event)
     {
+        console.log(JSON.stringify(event, null, 2));
+
         var files = event.target.files;
         if ( files.length !== 0 ) {
             self.loadFiles(files);
@@ -1314,8 +1318,9 @@ dwv.App = function ()
         createLayers(dataWidth, dataHeight);
 
         // get the image data from the image layer
+        // create image buffer RGB
         imageData = imageLayer.getContext().createImageData(
-                dataWidth, dataHeight);
+            dataWidth, dataHeight);
 
         // image listeners
         view.addEventListener("wl-width-change", self.onWLChange);

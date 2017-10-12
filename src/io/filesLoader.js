@@ -17,7 +17,7 @@ dwv.io.fileContentTypes = {
 dwv.io.FilesLoader = function ()
 {
     /**
-     * Closure to self.
+     * Closure to self. This indicates parent object like dwv.io
      * @private
      * @type Object
      */
@@ -153,9 +153,11 @@ dwv.io.FilesLoader.prototype.load = function (ioArray)
         var foundLoader = false;
         for (var l = 0; l < loaders.length; ++l) {
             loader = loaders[l];
+            // algorithm : check file execution
             if (loader.canLoadFile(file)) {
                 foundLoader = true;
                 // set reader callbacks
+                // onload event is fired after the file had finished reading
                 reader.onload = loader.getFileLoadHandler(file, i);
                 reader.onerror = loader.getErrorHandler(file.name);
                 // read

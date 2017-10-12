@@ -33,7 +33,7 @@ dwv.io.DicomDataLoader = function ()
     /**
      * Load data.
      * @param {Object} buffer The DICOM buffer.
-     * @param {String} origin The data origin.
+     * @param {String} origin The data origin. files 정보
      * @param {Number} index The data index.
      */
     this.load = function (buffer, origin, index) {
